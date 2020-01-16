@@ -43,7 +43,7 @@ lambda2 = 0.002*(step.^2);
 
 lambda11 = 0.001*(step.^2);
 lambda22 = 0.002*(step.^2);
-lambda33 = 0.0007*(step.^2);
+lambda33 = 0.0004*(step.^2);
 
 %%%%%%%%%%%%%
 % First frame
@@ -151,7 +151,7 @@ for f=2:n_frames
                 y_moved = bSize*(h-1) + dy + hh;
                 x_moved = bSize*(w-1) + dx + ww;
                 movedBock = RecoVideo3(y_moved,x_moved,f-1,q);
-                [recoBlock, R3] = residualCoding(movedBock,frames(y_moved,x_moved,f),q);
+                [recoBlock, R3] = residualCoding(movedBock,frames(y_moved,x_moved,f),step(q));
                 
                 Dist3 = distortion(recoBlock,frames(bSize*(h-1)+hh,bSize*(w-1)+ww,f));
                 
@@ -191,6 +191,8 @@ for f=2:n_frames
     end
 end
 
+%%
+
 Rate1 = mean(video_rate1,1);
 Rate1 = (Rate1*FPS)/1000;
 PSNR1_video = mean(PSNR1,1);
@@ -206,7 +208,7 @@ plot(Rate2,PSNR2_video,'o-');
 plot(Rate3,PSNR3_video,'o-');
 hold off;
 grid on;
-title('PSNR vs bit rate for conditional ceplenishment video coder');
+title('PSNR vs bit rate for mode1, mode 1 and 2 and for mode 1,2 and 3 for foreman video');
 legend('intra mode','copy mode', 'moution mode');
 xlabel('Bit rate [kbps]');
 ylabel('PSNR');
@@ -223,7 +225,7 @@ plot_mat = [replacedBlock_count(:),totalBock_count(:)];
 figure;
 bar(step,plot_mat);
 legend('number of copied 16x16 blocks','total number of 16x16 blocks in the video');
-title('Number of copied blockes vs total number of blocks for different quantization steps');
+title('Number of blocks for different modes for different quantization steps for foreman video');
 xlabel('Quzantization step');
 ylabel('Number of 16x16 Blocks');
 
@@ -232,7 +234,7 @@ figure;
 bar(step,num_blocks_inmode);
 legend('number of intra-frame coded blocks',...
     'number of blocks coded with conditional replacement','number of blocks with motion compensation coding');
-title('Number of copied blockes for 3 different modes: intra-coding, conditional replacement and motion compensation');
+title('Number of blockes for 3 different modes for different quantization steps for foreman video');
 xlabel('Quzantization step');
 ylabel('Number of 16x16 Blocks');
 
