@@ -8,8 +8,8 @@ video_width = 176; video_height = 144;
 n_frames = 50;
 
 % Load video [video_width, vieo_height] 
+Video = yuv_import_y('foreman_qcif.yuv',[video_width video_height],n_frames);
 %Video = yuv_import_y('mother-daughter_qcif.yuv',[video_width video_height],n_frames);
-Video = yuv_import_y('mother-daughter_qcif.yuv',[video_width video_height],n_frames);
 frames = zeros(video_height,video_width,n_frames);               
 for i=1:n_frames
     frames(:,:,i) = Video{i,1};
@@ -38,12 +38,12 @@ n_blocks = video_width*video_height/(bSize^2);
 % To be tuned so that DistortionCOst roughly == RateCost
 %lambda1 = 0.0015*(step.^2);
 %lambda2 = 0.2*(step.^2);
-lambda1 = 0.002*(step.^2);
+lambda1 = 0.001*(step.^2);
 lambda2 = 0.002*(step.^2);
 
-lambda11 = 0.0015*(step.^2);
-lambda22 = 0.12*(step.^2);
-lambda33 = 0.0006*(step.^2);
+lambda11 = 0.001*(step.^2);
+lambda22 = 0.002*(step.^2);
+lambda33 = 0.0007*(step.^2);
 
 %%%%%%%%%%%%%
 % First frame
@@ -151,7 +151,7 @@ for f=2:n_frames
                 y_moved = bSize*(h-1) + dy + hh;
                 x_moved = bSize*(w-1) + dx + ww;
                 movedBock = RecoVideo3(y_moved,x_moved,f-1,q);
-                [recoBlock, R3] = residualCoding(movedBock,frames(y_moved,x_moved,f-1),q);
+                [recoBlock, R3] = residualCoding(movedBock,frames(y_moved,x_moved,f),q);
                 
                 Dist3 = distortion(recoBlock,frames(bSize*(h-1)+hh,bSize*(w-1)+ww,f));
                 
