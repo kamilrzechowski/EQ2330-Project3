@@ -8,8 +8,8 @@ video_width = 176; video_height = 144;
 n_frames = 50;
 
 % Load video [video_width, vieo_height] 
-Video = yuv_import_y('foreman_qcif.yuv',[video_width video_height],n_frames);
-%Video = yuv_import_y('mother-daughter_qcif.yuv',[video_width video_height],n_frames);
+%Video = yuv_import_y('foreman_qcif.yuv',[video_width video_height],n_frames);
+Video = yuv_import_y('mother-daughter_qcif.yuv',[video_width video_height],n_frames);
 frames = zeros(video_height,video_width,n_frames);               
 for i=1:n_frames
     frames(:,:,i) = Video{i,1};
@@ -240,4 +240,4 @@ ylabel('Number of 16x16 Blocks');
 
 %%
 % visualise
-%implay(uint8(RecoVideo3(:,:,:,4)),FPS);
+implay(uint8(RecoVideo3(:,:,:,4)),FPS);
